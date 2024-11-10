@@ -28,4 +28,15 @@ Check out the live application at [pomodoro-shadcn.netlify.app](https://pomodoro
 ```bash
 npm install
 ```
-3. Run
+3. Run the development server:
+```bash
+npm run dev
+```
+
+## Deployment
+
+This project is deployed on Netlify. You can visit the live site at [pomodoro-shadcn.netlify.app](https://pomodoro-shadcn.netlify.app)
+
+## License
+
+MIT
