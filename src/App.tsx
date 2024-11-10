@@ -4,7 +4,6 @@ import { useState, useEffect, useCallback } from "react"
 import { useTheme } from "next-themes"
 import { Moon, Sun } from "lucide-react"
 import { Settings } from "@/components/Settings"
-import { Switch } from "@/components/ui/switch"
 
 function App() {
   const { theme, setTheme } = useTheme()
