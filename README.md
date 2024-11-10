@@ -1,50 +1,104 @@
-# React + TypeScript + Vite
+# Pomodoro Timer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, feature-rich Pomodoro Timer built with React and TypeScript. This application helps you manage your work sessions using the Pomodoro Technique, with customizable timers and breaks.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Customizable Timers**
+  - Pomodoro duration (work session)
+  - Short break duration
+  - Long break duration
+  - Configurable long break intervals
 
-## Expanding the ESLint configuration
+- **Smart Break System**
+  - Automatic switch between work sessions and breaks
+  - Long breaks after configured number of completed pomodoros
+  - Short breaks between work sessions
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Automation Options**
+  - Auto-start breaks
+  - Auto-start pomodoros
+  - Desktop notifications when timers complete
 
-- Configure the top-level `parserOptions` property like this:
+- **User Experience**
+  - Clean, minimal interface
+  - Dark/Light theme support
+  - Visual feedback with color-coded backgrounds
+    - Red for work sessions
+    - Green for short breaks
+    - Blue for long breaks
+  - Real-time browser tab timer display
+  - Session statistics tracking
+    - Total completed pomodoros
+    - Total focus time
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Technologies Used
+
+- React
+- TypeScript
+- Tailwind CSS
+- Shadcn/ui Components
+- Lucide Icons
+- Vite
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone [your-repository-url]
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
 ```
+
+3. Start the development server:
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+The application will be available at `http://localhost:5173`
+
+## Usage
+
+1. Choose your timer type:
+   - Pomodoro (default work session)
+   - Short Break
+   - Long Break
+
+2. Customize your settings:
+   - Click the settings icon to adjust timer durations
+   - Configure auto-start preferences
+   - Set your preferred long break interval
+
+3. Click START to begin your session
+   - Timer will count down
+   - Notifications will alert you when sessions end
+   - Progress is tracked automatically
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── Settings.tsx      # Timer configuration dialog
+│   └── ui/               # Reusable UI components
+├── App.tsx              # Main application logic
+└── index.css           # Global styles
+```
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
