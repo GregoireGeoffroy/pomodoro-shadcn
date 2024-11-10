@@ -9,6 +9,7 @@ import {
 import { Settings as SettingsIcon } from "lucide-react"
 import { Slider } from "@/components/ui/slider"
 import { Label } from "@/components/ui/label"
+import { Switch } from "@/components/ui/switch"
 
 interface SettingsProps {
   durations: {
@@ -16,10 +17,21 @@ interface SettingsProps {
     shortBreak: number;
     longBreak: number;
   };
+  autoStartBreaks: boolean;
+  autoStartPomodoros: boolean;
+  longBreakInterval: number;
   onDurationChange: (key: string, value: number) => void;
+  onSettingChange: (key: string, value: boolean | number) => void;
 }
 
-export function Settings({ durations, onDurationChange }: SettingsProps) {
+export function Settings({ 
+  durations, 
+  autoStartBreaks,
+  autoStartPomodoros,
+  longBreakInterval,
+  onDurationChange,
+  onSettingChange 
+}: SettingsProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -65,6 +77,33 @@ export function Settings({ durations, onDurationChange }: SettingsProps) {
               value={[durations.longBreak]}
               onValueChange={(value) => onDurationChange('longBreak', value[0])}
             />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="longBreakInterval">Long Break Interval: {longBreakInterval} pomodoros</Label>
+            <Slider
+              id="longBreakInterval"
+              min={2}
+              max={8}
+              step={1}
+              value={[longBreakInterval]}
+              onValueChange={(value) => onSettingChange('longBreakInterval', value[0])}
+            />
+          </div>
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="autoStartBreaks"
+              checked={autoStartBreaks}
+              onCheckedChange={(checked) => onSettingChange('autoStartBreaks', checked)}
+            />
+            <Label htmlFor="autoStartBreaks">Auto-start Breaks</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="autoStartPomodoros"
+              checked={autoStartPomodoros}
+              onCheckedChange={(checked) => onSettingChange('autoStartPomodoros', checked)}
+            />
+            <Label htmlFor="autoStartPomodoros">Auto-start Pomodoros</Label>
           </div>
         </div>
       </DialogContent>

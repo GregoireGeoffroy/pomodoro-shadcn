@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react"
 import { useTheme } from "next-themes"
 import { Moon, Sun } from "lucide-react"
 import { Settings } from "@/components/Settings"
+import { Switch } from "@/components/ui/switch"
 
 function App() {
   const { theme, setTheme } = useTheme()
@@ -19,6 +20,9 @@ function App() {
   const [activeTab, setActiveTab] = useState('pomodoro')
   const [completedPomodoros, setCompletedPomodoros] = useState(0)
   const [totalPomodoroTime, setTotalPomodoroTime] = useState(0)
+  const [autoStartBreaks, setAutoStartBreaks] = useState(false)
+  const [autoStartPomodoros, setAutoStartPomodoros] = useState(false)
+  const [longBreakInterval, setLongBreakInterval] = useState(4)
 
   const handleTimerComplete = useCallback(() => {
     setIsActive(false)
@@ -28,15 +32,17 @@ function App() {
       setCompletedPomodoros(newCompletedCount)
       setTotalPomodoroTime(prev => prev + timerDurations.pomodoro * 60)
       
-      if (newCompletedCount % 4 === 0) {
+      if (newCompletedCount % longBreakInterval === 0) {
         setActiveTab('longBreak')
         setTime(timerDurations.longBreak * 60)
+        if (autoStartBreaks) setIsActive(true)
         new Notification('Pomodoro Complete!', { 
           body: "Time for a long break!" 
         })
       } else {
         setActiveTab('shortBreak')
         setTime(timerDurations.shortBreak * 60)
+        if (autoStartBreaks) setIsActive(true)
         new Notification('Pomodoro Complete!', { 
           body: "Time for a short break!" 
         })
@@ -44,11 +50,12 @@ function App() {
     } else {
       setActiveTab('pomodoro')
       setTime(timerDurations.pomodoro * 60)
+      if (autoStartPomodoros) setIsActive(true)
       new Notification('Break Complete!', { 
         body: "Time to focus!" 
       })
     }
-  }, [activeTab, completedPomodoros, timerDurations])
+  }, [activeTab, completedPomodoros, timerDurations, longBreakInterval, autoStartBreaks, autoStartPomodoros])
 
   useEffect(() => {
     if ('Notification' in window) {
@@ -109,6 +116,20 @@ function App() {
     }
   }
 
+  const handleSettingChange = (key: string, value: boolean | number) => {
+    switch (key) {
+      case 'autoStartBreaks':
+        setAutoStartBreaks(value as boolean)
+        break
+      case 'autoStartPomodoros':
+        setAutoStartPomodoros(value as boolean)
+        break
+      case 'longBreakInterval':
+        setLongBreakInterval(value as number)
+        break
+    }
+  }
+
   return (
     <div className={`h-screen flex items-center justify-center transition-colors ${getBgColor()}`}>
       <div className="w-[400px] flex flex-col items-center space-y-8 p-8 rounded-xl border border-border shadow-lg bg-background/50 backdrop-blur-sm">
@@ -122,7 +143,14 @@ function App() {
             <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
             <span className="sr-only">Toggle theme</span>
           </Button>
-          <Settings durations={timerDurations} onDurationChange={handleDurationChange} />
+          <Settings 
+            durations={timerDurations} 
+            autoStartBreaks={autoStartBreaks}
+            autoStartPomodoros={autoStartPomodoros}
+            longBreakInterval={longBreakInterval}
+            onDurationChange={handleDurationChange}
+            onSettingChange={handleSettingChange}
+          />
         </div>
 
         <Tabs 
